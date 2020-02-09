@@ -68,7 +68,8 @@
                   :let [target (io/file tmp (.getName entry))]]
             (io/make-parents target)
             (with-open [is (.getInputStream zipfile entry) ]
-              (io/copy is target))))
+              (io/copy is target)))
+          (.close zipfile))
         (-> fileset (c/rm archives) (c/add-resource tmp) c/commit!)))))
 
 (def decompress-deps '[[org.apache.commons/commons-compress "1.14"]])
